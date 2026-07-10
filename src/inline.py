@@ -1,11 +1,7 @@
-from htmlnode import HTMLNode, LeafNode, ParentNode
-from textnode import TextNode, TextType, text_node_to_html_node
+from textnode import TextNode, TextType
 
 
 def split_nodes_delimiter(old_nodes: list[TextNode], delimiter: str, text_type: TextType) -> list[TextNode]:
-    if text_type not in TextType:
-        raise Exception ("Invalid TextType Option")
-
     new_nodes = []
     for node in old_nodes:
         if node.text_type == TextType.TEXT:
