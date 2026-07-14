@@ -3,7 +3,7 @@ from textnode import TextNode, TextType
 from markdown import split_nodes_delimiter, extract_markdown_images, extract_markdown_links, split_nodes_image, split_nodes_link, text_to_textnodes
 
 
-class TestTextNode(unittest.TestCase):
+class TestMarkdownSplits(unittest.TestCase):
     #SPLIT NODES TESTS
     
     def test_split_nodes_italics(self):
