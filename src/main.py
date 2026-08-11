@@ -4,11 +4,10 @@ from blocks import markdown_to_html_node
 
 
 def main():
-    try:
-        basepath = sys.argv
-    except:
+    if len(sys.argv) == 1:
         basepath = "/"
-
+    else:
+        basepath = sys.argv[1]
     destination = path.abspath("docs")
     source = path.abspath("static")
     content = path.abspath("content")
@@ -69,7 +68,7 @@ def generate_page(from_path, template_path, dest_path, basepath):
     template_title = template_path_template.replace("{{ Title }}", title)
     template_replaced = template_title.replace("{{ Content }}", html)
     href_replaced = template_replaced.replace('href="/', f'href="{basepath}')
-    src_replaced = href_replaced.replace('href="/', f'href="{basepath}')
+    src_replaced = href_replaced.replace('src="/', f'src="{basepath}')
     directories_needed = os.path.dirname(dest_path)
     os.makedirs(directories_needed, exist_ok=True)
     with open(dest_path, "w") as file:
