@@ -6,10 +6,11 @@ from blocks import markdown_to_html_node
 def main():
     destination = path.abspath("public")
     source = path.abspath("static")
+    content = path.abspath("content")
     if os.path.isdir(destination):
         shutil.rmtree(destination)
     copy_to_and_from_dir(source, destination)
-    generate_page("content/index.md", "template.html", "public/index.html")
+    generate_pages_recursive(content, "template.html", destination)
 
 def copy_to_and_from_dir(source, destination):
     files = os.listdir(source)
@@ -66,5 +67,24 @@ def generate_page(from_path, template_path, dest_path):
     os.makedirs(directories_needed, exist_ok=True)
     with open(dest_path, "w") as file:
                 file.write(template_replaced)
+
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    files = os.listdir(dir_path_content)
+    
+    for filename in files:
+        current_file = os.path.join(dir_path_content, filename)
+        root_ext = os.path.splitext(filename)
+        root, ext = root_ext
+        if ext == ".md":
+            ext = ".html"
+            new_filename = root + ext
+            destination_file = os.path.join(dest_dir_path, new_filename)
+        else:
+            destination_file = os.path.join(dest_dir_path, filename)
+
+        if os.path.isfile(current_file):
+            generate_page(current_file, template_path, destination_file)
+        else:
+            generate_pages_recursive(current_file, template_path, destination_file)
 
 main()
