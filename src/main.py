@@ -9,7 +9,7 @@ def main():
     except:
         basepath = "/"
 
-    destination = path.abspath("public")
+    destination = path.abspath("docs")
     source = path.abspath("static")
     content = path.abspath("content")
     if os.path.isdir(destination):
